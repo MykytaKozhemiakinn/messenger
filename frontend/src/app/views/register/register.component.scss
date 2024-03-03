@@ -1,0 +1,21 @@
+@import 'variables';
+
+@media (min-width: $breakpoint-lg) {
+  .error {
+    &-dialog {
+      position: absolute;
+      left: calc(100% + 10px);
+      top: calc(50% - 85px);
+      width: 250px;
+      transform: translateY(-25%);
+      z-index: 99;
+      border: 1px solid $color-gray-dark;
+      background-color: rgba($color-white, 0.8);
+      backdrop-filter: blur(3px);
+
+      div {
+        font-size: 13px;
+      }
+    }
+  }
+}

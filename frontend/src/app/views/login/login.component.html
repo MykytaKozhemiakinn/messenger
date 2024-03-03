@@ -1,0 +1,77 @@
+<div class="flex align-items-center justify-content-center auth-container">
+  <form (ngSubmit)="login()" class="form" [formGroup]="loginForm">
+    <section class="header">
+      <h1 class="header-title">LOG IN</h1>
+    </section>
+    <section class="pb-3 controls p-fluid">
+      <div class="controls-field field">
+        <label class="controls-label" for="email">Email</label>
+        <div class="input-field-wrapper w-full">
+          <input
+            [required]="true"
+            class="radius-5"
+            id="email"
+            type="email"
+            pInputText
+            placeholder="Email"
+            formControlName="email" />
+        </div>
+        <div class="error-container">
+          <ng-container *ngIf="loginForm.get('email') as control">
+            <ng-container *ngIf="control.dirty || control.touched">
+              <div class="controls-error" *ngIf="control.errors?.required">
+                Email is required
+              </div>
+              <div class="controls-error" *ngIf="control.errors?.email">
+                Email is not valid
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+      <div class="controls-field field">
+        <label class="controls-label" for="password">Password</label>
+        <div class="input-field-wrapper w-full">
+          <input
+            id="password"
+            [required]="true"
+            [type]="passwordVisible ? 'text' : 'password'"
+            pInputText
+            placeholder="Password"
+            formControlName="password" />
+          <div class="icon-visible-wrapper">
+            <i
+              (click)="switchPasswordVisibility()"
+              class="cursor-pointer icon-visible"
+              [ngClass]="passwordVisible ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
+          </div>
+        </div>
+        <div class="error-container">
+          <ng-container *ngIf="loginForm.get('password') as control">
+            <ng-container *ngIf="control.dirty || control.touched">
+              <div class="controls-error" *ngIf="control.errors?.required">
+                Password is required
+              </div>
+              <div class="controls-error" *ngIf="control.errors?.minlength">
+                Password should contain at least 8 characters
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </section>
+    <div class="mb-3">
+      <p-button
+        severity="secondary"
+        type="submit"
+        label="Log in"
+        [disabled]="loginForm.invalid"></p-button>
+    </div>
+    <div>
+      <p class="sign-in">
+        Don't have an account?
+        <a class="sign-in-link" routerLink="/register">Register</a>
+      </p>
+    </div>
+  </form>
+</div>

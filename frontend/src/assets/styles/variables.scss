@@ -1,0 +1,47 @@
+:root {
+  --main-font-color: #363636;
+  --color-white: #fff;
+  --color-silver: #e9ecef;
+  --color-gray: #e1e1e1;
+  --color-gray-light: #f1f2f2;
+  --color-gray-dark: #707070;
+  --color-creamy: #c6a37e;
+  --color-green: #00a021;
+  --color-orange: #ce6300;
+  --color-red: #a00000;
+  --color-blue-navy: #00223e;
+  --color-black: #000;
+
+  --box-shadow: 0px 1px 7px rgba(0, 0, 0, 0.1),
+    0px 4px 5px -2px rgba(0, 0, 0, 0.015), 0px 10px 15px -5px rgba(0, 0, 0, 0.1);
+  --box-shadow-light: 0px 1px 7px rgba(0, 0, 0, 0.03),
+    0px 4px 5px -2px rgba(0, 0, 0, 0.003),
+    0px 10px 15px -5px rgba(0, 0, 0, 0.03);
+
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-xxl: 1500px;
+}
+
+// colors
+$main-font-color: #363636;
+$color-white: #fff;
+$color-silver: #e9ecef;
+$color-gray: #e1e1e1;
+$color-gray-light: #f1f2f2;
+$color-gray-dark: #707070;
+$color-creamy: #c6a37e;
+$color-green: #00a021;
+$color-orange: #ce6300;
+$color-red: #a00000;
+$color-blue-navy: #00223e;
+$color-black: #000;
+
+// breakpoints
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+$breakpoint-xxl: 1500px;

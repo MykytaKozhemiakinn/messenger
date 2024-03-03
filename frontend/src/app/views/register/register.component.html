@@ -1,0 +1,199 @@
+<div class="flex align-items-center justify-content-center auth-container">
+  <form (ngSubmit)="register()" class="form" [formGroup]="registerForm">
+    <section class="header">
+      <h1 class="header-title">REGISTER</h1>
+    </section>
+    <section class="pb-3 controls p-fluid">
+      <div class="controls-field field">
+        <label class="controls-label" for="email">Username</label>
+        <div class="input-field-wrapper w-full">
+          <input
+            [required]="true"
+            class="radius-5"
+            id="username"
+            type="text"
+            pInputText
+            placeholder="John Doe"
+            formControlName="username" />
+        </div>
+        <div class="error-container">
+          <ng-container *ngIf="registerForm.get('username') as control">
+            <ng-container *ngIf="control.dirty || control.touched">
+              <div class="controls-error" *ngIf="control.errors?.required">
+                Username is required
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+      <div class="controls-field field">
+        <label class="controls-label" for="email">Email</label>
+        <div class="input-field-wrapper w-full">
+          <input
+            [required]="true"
+            class="radius-5"
+            id="email"
+            type="email"
+            pInputText
+            placeholder="johndoe@gmail.com"
+            formControlName="email" />
+        </div>
+        <div class="error-container">
+          <ng-container *ngIf="registerForm.get('email') as control">
+            <ng-container *ngIf="control.dirty || control.touched">
+              <div class="controls-error" *ngIf="control.errors?.required">
+                Email is required
+              </div>
+              <div class="controls-error" *ngIf="control.errors?.email">
+                Email is not valid
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+      <div class="controls-field field">
+        <label class="controls-label" for="password">Password</label>
+        <div class="input-field-wrapper w-full">
+          <input
+            id="password"
+            [required]="true"
+            [type]="passwordVisible ? 'text' : 'password'"
+            pInputText
+            placeholder="JohnDoe!23##"
+            formControlName="password" />
+          <div class="icon-visible-wrapper">
+            <i
+              (click)="switchPasswordVisibility()"
+              class="cursor-pointer icon-visible"
+              [ngClass]="passwordVisible ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
+          </div>
+        </div>
+        <div class="error-container" [class.show-validators]="showValidators">
+          <ng-container *ngIf="registerForm.get('password') as control">
+            <div class="controls-error" *ngIf="control.errors?.api">
+              {{ control.errors?.api }}
+            </div>
+            <ng-container *ngIf="control.dirty || control.touched">
+              <ng-container *ngIf="showValidators">
+                <div class="p-p-lg-4 error-dialog">
+                  <div
+                    [ngClass]="
+                      control.hasError('required')
+                        ? 'controls-error'
+                        : 'controls-success'
+                    ">
+                    Password is required
+                  </div>
+                  <div
+                    [ngClass]="
+                      control.hasError('required') ||
+                      control.hasError('minlength')
+                        ? 'controls-error'
+                        : 'controls-success'
+                    ">
+                    At least 8 characters
+                  </div>
+                  <div
+                    [ngClass]="
+                      control.hasError('required') ||
+                      control.hasError('hasNumber')
+                        ? 'controls-error'
+                        : 'controls-success'
+                    ">
+                    At least 1 number
+                  </div>
+                  <div
+                    [ngClass]="
+                      control.hasError('required') ||
+                      control.hasError('hasCapitalCase')
+                        ? 'controls-error'
+                        : 'controls-success'
+                    ">
+                    At least 1 capital case letter
+                  </div>
+                  <div
+                    [ngClass]="
+                      control.hasError('required') ||
+                      control.hasError('hasSmallCase')
+                        ? 'controls-error'
+                        : 'controls-success'
+                    ">
+                    At least 1 small case letter
+                  </div>
+                  <div
+                    [ngClass]="
+                      control.hasError('required') ||
+                      control.hasError('hasSpecialCharacters')
+                        ? 'controls-error'
+                        : 'controls-success'
+                    ">
+                    At least 1 special character
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+      <div class="controls-field field">
+        <label class="controls-label" for="confirm-password"
+          >Confirm Password</label
+        >
+        <div class="input-field-wrapper w-full">
+          <input
+            id="confirm-password"
+            type="password"
+            [required]="true"
+            pInputText
+            placeholder="JohnDoe!23##"
+            formControlName="confirmPassword" />
+        </div>
+        <div class="error-container">
+          <ng-container *ngIf="registerForm.get('confirmPassword') as control">
+            <ng-container *ngIf="control.dirty || control.touched">
+              <div class="controls-error" *ngIf="control.errors?.required">
+                Confirm password is required
+              </div>
+              <div class="controls-error" *ngIf="control.errors?.notTheSame">
+                Passwords don't match
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="flex justify-content-between align-items-center">
+        <p-avatar
+          class="mr-5"
+          size="xlarge"
+          shape="circle"
+          [image]="selectedImageUrl"></p-avatar>
+        <p-button
+          severity="primary"
+          label="Upload avatar"
+          (click)="fileInput.click()">
+          <input
+            #fileInput
+            type="file"
+            (change)="onFileSelected($event)"
+            accept=".png, .jpg, .jpeg"
+            style="display: none" />
+        </p-button>
+      </div>
+    </section>
+    <div class="mb-3">
+      <p-button
+        severity="secondary"
+        type="submit"
+        label="Register"
+        [disabled]="registerForm.invalid"></p-button>
+    </div>
+    <div>
+      <p class="sign-in">
+        Already have an account?
+        <a class="sign-in-link" routerLink="/login">Log in</a>
+      </p>
+    </div>
+  </form>
+</div>
+<p-toast position="top-right"></p-toast>
