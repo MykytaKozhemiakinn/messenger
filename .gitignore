@@ -30,7 +30,7 @@ frontend/.vscode/tasks.json
 .history/*
 
 # Miscellaneous
-/.angular/cache
+frontend/.angular
 .sass-cache/
 /connect.lock
 /coverage

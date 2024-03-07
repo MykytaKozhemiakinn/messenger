@@ -5,10 +5,9 @@
     "outDir": "./out-tsc/app",
     "types": [],
     "paths": {
-      "@views/*": ["./src/views"],
-      "@services/*": ["./src/app/services"],
-      "@models/*": ["./src/app/models"],
-      "@constants/*": ["./src/app/constants"]
+      "@common/*": ["./src/app/common/*"],
+      "@auth/*": ["./src/app/features/auth/*"],
+      "@env/*": ["./src/environments/*"],
     }
   },
   "files": [

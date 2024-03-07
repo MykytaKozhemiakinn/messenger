@@ -1,5 +1,5 @@
 <div class="flex align-items-center justify-content-center auth-container">
-  <form (ngSubmit)="register()" class="form" [formGroup]="registerForm">
+  <form (ngSubmit)="register(registerForm.value)" class="form" [formGroup]="registerForm">
     <section class="header">
       <h1 class="header-title">REGISTER</h1>
     </section>

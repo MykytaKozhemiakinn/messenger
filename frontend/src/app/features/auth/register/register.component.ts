@@ -13,15 +13,16 @@ import { NgClass, NgIf } from '@angular/common';
 import { FileUploadModule } from 'primeng/fileupload';
 import { AvatarModule } from 'primeng/avatar';
 import { ToastModule } from 'primeng/toast';
-import { UtilsService } from '../../services/utils.service';
+import { UtilsService } from '@common/services/utils.service';
 import { MessageService } from 'primeng/api';
-import { RegisterFormService } from '../../services/register-form.service';
+import { RegisterFormService } from '@auth/services/register-form.service';
 import {
   invalidFileTypeContent,
   invalidFileTypeHeader,
   tooHeavyFileContent,
   tooHeavyFileHeader,
-} from '../../constants/toast-content';
+} from '@common/constants/toast-content';
+import { AuthApiService } from '@auth/api/auth.api';
 
 @Component({
   selector: 'app-register',
@@ -48,6 +49,7 @@ export class RegisterComponent implements OnInit {
   private readonly utilsService: UtilsService = inject(UtilsService);
   private readonly registerFormService: RegisterFormService =
     inject(RegisterFormService);
+  private readonly authApiService: AuthApiService = inject(AuthApiService);
 
   public passwordVisible: boolean = false;
   public showValidators: boolean = false;
@@ -59,7 +61,9 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.registerFormService.initRegisterForm();
   }
 
-  public register(): void {}
+  public register(form: FormGroup): void {
+    this.authApiService.register(form).subscribe();
+  }
 
   public switchPasswordVisibility(): void {
     this.passwordVisible = !this.passwordVisible;
@@ -71,6 +75,7 @@ export class RegisterComponent implements OnInit {
     if (this.isValidFile(file)) {
       this.selectedImage = file;
       this.generateImageUrl();
+      this.registerForm.controls.avatar.setValue(file);
       return;
     }
   }
@@ -100,8 +105,8 @@ export class RegisterComponent implements OnInit {
 
   private generateImageUrl(): void {
     const reader: FileReader = new FileReader();
-    reader.onload = (event): void => {
-      this.selectedImageUrl = event.target.result;
+    reader.onload = (event: ProgressEvent<FileReader>): void => {
+      this.selectedImageUrl = event.target.result as string;
     };
     reader.readAsDataURL(this.selectedImage);
   }

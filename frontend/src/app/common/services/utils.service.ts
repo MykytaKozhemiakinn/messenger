@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { MessageSeverityModel } from '../models/message-severity.model';
+import { MessageSeverityModel } from '@common/models/message-severity.model';
 
 @Injectable({
   providedIn: 'root',

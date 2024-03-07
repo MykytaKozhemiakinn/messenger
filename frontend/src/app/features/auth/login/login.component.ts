@@ -9,7 +9,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { RouterLink } from '@angular/router';
 import { NgClass, NgIf } from '@angular/common';
-import { LoginFormService } from '../../services/login-form.service';
+import { LoginFormService } from '@auth/services/login-form.service';
 
 @Component({
   selector: 'app-login',

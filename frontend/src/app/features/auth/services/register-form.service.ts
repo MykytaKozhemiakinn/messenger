@@ -16,6 +16,9 @@ export class RegisterFormService {
         null,
         Validators.required
       ),
+      avatar: this.formBuilder.control<File>(
+        null,
+      ),
     });
   }
 }
