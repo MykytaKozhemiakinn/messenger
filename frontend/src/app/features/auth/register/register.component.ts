@@ -13,16 +13,12 @@ import { NgClass, NgIf } from '@angular/common';
 import { FileUploadModule } from 'primeng/fileupload';
 import { AvatarModule } from 'primeng/avatar';
 import { ToastModule } from 'primeng/toast';
-import { UtilsService } from '@common/services/utils.service';
 import { MessageService } from 'primeng/api';
 import { RegisterFormService } from '@auth/services/register-form.service';
-import {
-  invalidFileTypeContent,
-  invalidFileTypeHeader,
-  tooHeavyFileContent,
-  tooHeavyFileHeader,
-} from '@common/constants/toast-content';
 import { AuthApiService } from '@auth/api/auth.api';
+import { AuthService } from '@auth/services/auth.service';
+import { UtilsService } from '@common/services/utils.service';
+import { RegistrationPayload } from '@auth/models/auth.model';
 
 @Component({
   selector: 'app-register',
@@ -43,13 +39,13 @@ import { AuthApiService } from '@auth/api/auth.api';
   styleUrls: ['./register.component.scss', '../login/login.component.scss'],
   // there is no other way to force p-avatar react on selectedImageUrlChanges
   changeDetection: ChangeDetectionStrategy.Default,
-  providers: [UtilsService, MessageService],
+  providers: [AuthService, UtilsService, MessageService],
 })
 export class RegisterComponent implements OnInit {
-  private readonly utilsService: UtilsService = inject(UtilsService);
   private readonly registerFormService: RegisterFormService =
     inject(RegisterFormService);
   private readonly authApiService: AuthApiService = inject(AuthApiService);
+  private readonly authService: AuthService = inject(AuthService);
 
   public passwordVisible: boolean = false;
   public showValidators: boolean = false;
@@ -61,8 +57,14 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.registerFormService.initRegisterForm();
   }
 
-  public register(form: FormGroup): void {
-    this.authApiService.register(form).subscribe();
+  public register(form: { [x: string]: string | Blob }): void {
+    const formData: FormData = new FormData();
+    for (const field in form) {
+      formData.append(field, form[field]);
+    }
+    this.authApiService
+      .register(formData as unknown as RegistrationPayload)
+      .subscribe();
   }
 
   public switchPasswordVisibility(): void {
@@ -72,35 +74,12 @@ export class RegisterComponent implements OnInit {
   public onFileSelected(event: Event): void {
     const input: HTMLInputElement | null = event.target as HTMLInputElement;
     const file: File | null = input.files[0];
-    if (this.isValidFile(file)) {
+    if (this.authService.isSelectedAvatarValid(file)) {
       this.selectedImage = file;
       this.generateImageUrl();
       this.registerForm.controls.avatar.setValue(file);
       return;
     }
-  }
-
-  private isValidFile(file: File): boolean {
-    const allowedTypes: string[] = ['image/png', 'image/jpeg', 'image/jpg'];
-    const maxFileSize: number = 2 * 1024 * 1024; // 2MB
-
-    if (!allowedTypes.includes(file.type)) {
-      this.utilsService.showMessage(
-        'error',
-        invalidFileTypeHeader,
-        invalidFileTypeContent
-      );
-      return false;
-    }
-    if (file.size > maxFileSize) {
-      this.utilsService.showMessage(
-        'error',
-        tooHeavyFileHeader,
-        tooHeavyFileContent
-      );
-      return false;
-    }
-    return true;
   }
 
   private generateImageUrl(): void {

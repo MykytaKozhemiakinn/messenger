@@ -1,5 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+import { RegistrationPayload } from '@auth/models/auth.model';
+import { TypedFormGroupModel } from '@common/models/typed-form-group.model';
 
 @Injectable({
   providedIn: 'root',
@@ -7,7 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class RegisterFormService {
   private readonly formBuilder: FormBuilder = inject(FormBuilder);
 
-  public initRegisterForm(): FormGroup {
+  public initRegisterForm(): TypedFormGroupModel<RegistrationPayload> {
     return this.formBuilder.group({
       username: this.formBuilder.control<string>(null, Validators.required),
       email: this.formBuilder.control<string>(null, Validators.required),
@@ -16,9 +18,7 @@ export class RegisterFormService {
         null,
         Validators.required
       ),
-      avatar: this.formBuilder.control<File>(
-        null,
-      ),
+      avatar: this.formBuilder.control<File>(null),
     });
   }
 }

@@ -1,6 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { ApiService } from '@common/services/api.service';
 import { Observable } from 'rxjs';
+import {
+  RegistrationPayload,
+  RegistrationResponse,
+} from '@auth/models/auth.model';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +12,9 @@ import { Observable } from 'rxjs';
 export class AuthApiService {
   private readonly apiService: ApiService = inject(ApiService);
 
-  public register(registerForm: any): Observable<any> {
+  public register(
+    registerForm: RegistrationPayload
+  ): Observable<RegistrationResponse> {
     return this.apiService.post('/user/register', registerForm);
   }
 }

@@ -13,7 +13,7 @@ export class ApiService {
   private readonly baseUrl: string = environment.apiUrl;
   private readonly httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json',
+      'Accept': 'application/json',
     }),
   };
 
