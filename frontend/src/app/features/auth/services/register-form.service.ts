@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { RegistrationPayload } from '@auth/models/auth.model';
+import { AuthPayload } from '@auth/models/auth.model';
 import { TypedFormGroupModel } from '@common/models/typed-form-group.model';
 
 @Injectable({
@@ -9,16 +9,13 @@ import { TypedFormGroupModel } from '@common/models/typed-form-group.model';
 export class RegisterFormService {
   private readonly formBuilder: FormBuilder = inject(FormBuilder);
 
-  public initRegisterForm(): TypedFormGroupModel<RegistrationPayload> {
+  public initRegisterForm(): TypedFormGroupModel<AuthPayload> {
     return this.formBuilder.group({
-      username: this.formBuilder.control<string>(null, Validators.required),
-      email: this.formBuilder.control<string>(null, Validators.required),
-      password: this.formBuilder.control<string>(null, Validators.required),
-      confirmPassword: this.formBuilder.control<string>(
-        null,
-        Validators.required
-      ),
-      avatar: this.formBuilder.control<File>(null),
+      username: this.formBuilder.control(null, Validators.required),
+      email: this.formBuilder.control(null, Validators.required),
+      password: this.formBuilder.control(null, Validators.required),
+      confirmPassword: this.formBuilder.control(null, Validators.required),
+      avatar: this.formBuilder.control(null),
     });
   }
 }

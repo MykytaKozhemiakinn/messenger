@@ -1,5 +1,8 @@
 <div class="flex align-items-center justify-content-center auth-container">
-  <form (ngSubmit)="login()" class="form" [formGroup]="loginForm">
+  <form
+    (ngSubmit)="login(loginForm.value)"
+    class="form"
+    [formGroup]="loginForm">
     <section class="header">
       <h1 class="header-title">LOG IN</h1>
     </section>

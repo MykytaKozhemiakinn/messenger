@@ -7,7 +7,7 @@ import {
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { NgClass, NgIf } from '@angular/common';
 import { FileUploadModule } from 'primeng/fileupload';
@@ -18,7 +18,8 @@ import { RegisterFormService } from '@auth/services/register-form.service';
 import { AuthApiService } from '@auth/api/auth.api';
 import { AuthService } from '@auth/services/auth.service';
 import { UtilsService } from '@common/services/utils.service';
-import { RegistrationPayload } from '@auth/models/auth.model';
+import { AuthPayload } from '@auth/models/auth.model';
+import { TypedFormGroupModel } from '@common/models/typed-form-group.model';
 
 @Component({
   selector: 'app-register',
@@ -51,7 +52,7 @@ export class RegisterComponent implements OnInit {
   public showValidators: boolean = false;
   public selectedImage: Blob | undefined = undefined;
   public selectedImageUrl: string | undefined = undefined;
-  public registerForm: FormGroup;
+  public registerForm: TypedFormGroupModel<AuthPayload>;
 
   ngOnInit(): void {
     this.registerForm = this.registerFormService.initRegisterForm();
@@ -63,7 +64,7 @@ export class RegisterComponent implements OnInit {
       formData.append(field, form[field]);
     }
     this.authApiService
-      .register(formData as unknown as RegistrationPayload)
+      .register(formData as unknown as AuthPayload)
       .subscribe();
   }
 
