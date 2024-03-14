@@ -15,11 +15,12 @@ import { AvatarModule } from 'primeng/avatar';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { RegisterFormService } from '@auth/services/register-form.service';
-import { AuthApiService } from '@auth/api/auth.api';
 import { AuthService } from '@auth/services/auth.service';
 import { UtilsService } from '@common/services/utils.service';
 import { AuthPayload } from '@auth/models/auth.model';
 import { TypedFormGroupModel } from '@common/models/typed-form-group.model';
+import { AuthActions } from '@store/auth';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-register',
@@ -45,8 +46,8 @@ import { TypedFormGroupModel } from '@common/models/typed-form-group.model';
 export class RegisterComponent implements OnInit {
   private readonly registerFormService: RegisterFormService =
     inject(RegisterFormService);
-  private readonly authApiService: AuthApiService = inject(AuthApiService);
   private readonly authService: AuthService = inject(AuthService);
+  private readonly store: Store = inject(Store);
 
   public passwordVisible: boolean = false;
   public showValidators: boolean = false;
@@ -63,9 +64,12 @@ export class RegisterComponent implements OnInit {
     for (const field in form) {
       formData.append(field, form[field]);
     }
-    this.authApiService
-      .register(formData as unknown as AuthPayload)
-      .subscribe();
+
+    this.store.dispatch(
+      AuthActions.register({
+        registerPayload: formData as unknown as AuthPayload,
+      })
+    );
   }
 
   public switchPasswordVisibility(): void {

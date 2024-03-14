@@ -8,6 +8,7 @@
       "@common/*": ["./src/app/common/*"],
       "@auth/*": ["./src/app/features/auth/*"],
       "@env/*": ["./src/environments/*"],
+      "@store/*": ["./src/app/store/*"],
     }
   },
   "files": [

@@ -10,9 +10,10 @@ import { ButtonModule } from 'primeng/button';
 import { RouterLink } from '@angular/router';
 import { NgClass, NgIf } from '@angular/common';
 import { LoginFormService } from '@auth/services/login-form.service';
-import { AuthApiService } from '@auth/api/auth.api';
 import { LoginPayload } from '@auth/models/auth.model';
 import { TypedFormGroupModel } from '@common/models/typed-form-group.model';
+import { Store } from '@ngrx/store';
+import { AuthActions } from '@store/auth';
 
 @Component({
   selector: 'app-login',
@@ -32,7 +33,7 @@ import { TypedFormGroupModel } from '@common/models/typed-form-group.model';
 export class LoginComponent implements OnInit {
   private readonly loginFormService: LoginFormService =
     inject(LoginFormService);
-  private readonly authApiService: AuthApiService = inject(AuthApiService);
+  private readonly store: Store = inject(Store);
 
   public passwordVisible: boolean = false;
   public loginForm: TypedFormGroupModel<LoginPayload>;
@@ -42,7 +43,7 @@ export class LoginComponent implements OnInit {
   }
 
   public login(loginFormValue: any): void {
-    this.authApiService.login(loginFormValue).subscribe();
+    this.store.dispatch(AuthActions.login({ loginPayload: loginFormValue }));
   }
 
   public switchPasswordVisibility(): void {
